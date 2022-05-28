@@ -3,7 +3,13 @@ package com.customer_management_api.controller;
 import com.customer_management_api.entity.Store;
 import com.customer_management_api.service.StoreService;
 import java.util.List;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,5 +26,33 @@ public class StoreController {
     @GetMapping
     public List<Store> getStores() {
         return storeService.getStores();
+    }
+
+    @GetMapping("/{id}")
+    public Store getStore(@PathVariable Long id) {
+        return storeService.getStore(id);
+    }
+
+    @PostMapping
+    public Store createStore(@RequestBody @Validated({Store.CreateStoreGroup.class}) Store store) {
+        return storeService.createStore(store);
+    }
+
+    @PatchMapping("/{id}")
+    public Store updateStore(@PathVariable Long id,
+                             @RequestBody @Validated({Store.UpdateStoreGroup.class}) Store body) {
+        Store store = storeService.getStore(id);
+        if (body.getName() != null) {
+            store.setName(body.getName());
+        }
+        if (body.getDescription() != null) {
+            store.setDescription(body.getDescription());
+        }
+        return storeService.updateStore(store);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteStore(@PathVariable Long id) {
+        storeService.deleteStore(id);
     }
 }
