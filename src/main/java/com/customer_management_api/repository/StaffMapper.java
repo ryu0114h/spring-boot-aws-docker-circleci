@@ -1,6 +1,6 @@
 package com.customer_management_api.repository;
 
-import com.customer_management_api.entity.Store;
+import com.customer_management_api.entity.Staff;
 import java.util.List;
 import java.util.Optional;
 import org.apache.ibatis.annotations.Mapper;
@@ -9,59 +9,61 @@ import org.apache.ibatis.builder.annotation.ProviderMethodResolver;
 import org.apache.ibatis.jdbc.SQL;
 
 @Mapper
-public interface StoreMapper {
+public interface StaffMapper {
 
-    @SelectProvider(StoreSqlProvider.class)
-    List<Store> getStores();
+    @SelectProvider(StaffSqlProvider.class)
+    List<Staff> getStaffs();
 
-    @SelectProvider(StoreSqlProvider.class)
-    Optional<Store> getStore(Long id);
+    @SelectProvider(StaffSqlProvider.class)
+    Optional<Staff> getStaff(Long id);
 
-    @SelectProvider(StoreSqlProvider.class)
-    Store createStore(Store store);
+    @SelectProvider(StaffSqlProvider.class)
+    Staff createStaff(Staff staff);
 
-    @SelectProvider(StoreSqlProvider.class)
-    Store updateStore(Store store);
+    @SelectProvider(StaffSqlProvider.class)
+    Staff updateStaff(Staff staff);
 
-    @SelectProvider(StoreSqlProvider.class)
-    void deleteStore(Long id);
+    @SelectProvider(StaffSqlProvider.class)
+    void deleteStaff(Long id);
 
-    class StoreSqlProvider implements ProviderMethodResolver {
-        public String getStores() {
+    class StaffSqlProvider implements ProviderMethodResolver {
+        public String getStaffs() {
             return new SQL() {{
                 SELECT("*");
-                FROM("STORE");
+                FROM("STAFF");
             }}.toString();
         }
 
-        public String getStore(Long id) {
+        public String getStaff(Long id) {
             return new SQL() {{
                 SELECT("*");
-                FROM("STORE");
+                FROM("STAFF");
                 WHERE("ID = #{id}");
             }}.toString();
         }
 
-        public String createStore(Store store) {
+        public String createStaff(Staff staff) {
             return new SQL() {{
-                INSERT_INTO("STORE");
-                VALUES("NAME", "#{name}");
-                VALUES("DESCRIPTION", "#{description}");
+                INSERT_INTO("STAFF");
+                VALUES("LAST_NAME", "#{lastName}");
+                VALUES("FIRST_NAME", "#{firstName}");
+                VALUES("BIRTHDAY", "#{birthday}");
             }}.toString();
         }
 
-        public String updateStore(Store store) {
+        public String updateStaff(Staff staff) {
             return new SQL() {{
-                UPDATE("STORE");
-                SET("NAME = #{name}");
-                SET("DESCRIPTION = #{description}");
+                UPDATE("STAFF");
+                SET("LAST_NAME = #{lastName}");
+                SET("FIRST_NAME = #{firstName}");
+                SET("BIRTHDAY = #{birthday}");
                 WHERE("ID = #{id}");
             }}.toString();
         }
 
-        public String deleteStore(Long id) {
+        public String deleteStaff(Long id) {
             return new SQL() {{
-                DELETE_FROM("STORE");
+                DELETE_FROM("STAFF");
                 WHERE("ID = #{id}");
             }}.toString();
         }
