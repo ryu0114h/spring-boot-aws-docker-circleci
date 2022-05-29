@@ -1,5 +1,7 @@
 package com.customer_management_api.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -20,7 +22,8 @@ public class Staff {
     String firstName;
 
     @NotNull(groups = {CreateStaffGroup.class, UpdateStaffGroup.class})
-    LocalDateTime birthday;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    LocalDate birthday;
 
     LocalDateTime createdAt;
 
