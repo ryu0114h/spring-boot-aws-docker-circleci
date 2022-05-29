@@ -1,6 +1,5 @@
 package com.customer_management_api.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.validation.constraints.NotBlank;
@@ -14,15 +13,14 @@ public class Staff {
     Long id;
 
     @NotBlank(groups = {CreateStaffGroup.class, UpdateStaffGroup.class})
-    @Size(min = 0, max = 50)
+    @Size(min = 0, max = 50, groups = {Store.CreateStoreGroup.class, Store.UpdateStoreGroup.class})
     String lastName;
 
     @NotBlank(groups = {CreateStaffGroup.class, UpdateStaffGroup.class})
-    @Size(min = 0, max = 50)
+    @Size(min = 0, max = 50, groups = {Store.CreateStoreGroup.class, Store.UpdateStoreGroup.class})
     String firstName;
 
     @NotNull(groups = {CreateStaffGroup.class, UpdateStaffGroup.class})
-    @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate birthday;
 
     LocalDateTime createdAt;

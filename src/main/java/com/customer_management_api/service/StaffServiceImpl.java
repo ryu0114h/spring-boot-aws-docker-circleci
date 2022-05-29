@@ -26,7 +26,7 @@ public class StaffServiceImpl implements StaffService {
     public Staff getStaff(Long id) {
         Optional<Staff> optionalStaff = staffRepository.getStaff(id);
         if (optionalStaff.isEmpty()) {
-            throw new RuntimeException("店舗が存在しません。");
+            throw new RuntimeException("スタッフが存在しません。");
         }
         return optionalStaff.get();
     }

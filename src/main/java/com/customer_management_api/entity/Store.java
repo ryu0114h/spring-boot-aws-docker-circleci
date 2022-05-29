@@ -11,11 +11,11 @@ public class Store {
     Long id;
 
     @NotBlank(groups = {CreateStoreGroup.class, UpdateStoreGroup.class})
-    @Size(min = 0, max = 50)
+    @Size(min = 0, max = 50, groups = {CreateStoreGroup.class, UpdateStoreGroup.class})
     String name;
 
     @NotBlank(groups = {CreateStoreGroup.class, UpdateStoreGroup.class})
-    @Size(min = 0, max = 200)
+    @Size(min = 0, max = 200, groups = {CreateStoreGroup.class, UpdateStoreGroup.class})
     String description;
 
     LocalDateTime createdAt;
