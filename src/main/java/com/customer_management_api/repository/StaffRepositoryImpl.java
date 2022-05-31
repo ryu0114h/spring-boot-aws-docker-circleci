@@ -27,6 +27,11 @@ public class StaffRepositoryImpl implements StaffRepository {
     }
 
     @Override
+    public Optional<Staff> getStaffByEmail(String email) {
+        return staffMapper.getStaffByEmail(email);
+    }
+
+    @Override
     public Staff createStaff(Staff staff) {
         return staffMapper.createStaff(staff);
     }

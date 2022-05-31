@@ -10,6 +10,8 @@ public interface StaffRepository {
 
     Optional<Staff> getStaff(Long id);
 
+    Optional<Staff> getStaffByEmail(String email);
+
     Staff createStaff(Staff staff);
 
     Staff updateStaff(Staff staff);

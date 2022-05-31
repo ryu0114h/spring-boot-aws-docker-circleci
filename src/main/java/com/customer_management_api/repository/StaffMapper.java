@@ -18,6 +18,9 @@ public interface StaffMapper {
     Optional<Staff> getStaff(Long id);
 
     @SelectProvider(StaffSqlProvider.class)
+    Optional<Staff> getStaffByEmail(String email);
+
+    @SelectProvider(StaffSqlProvider.class)
     Staff createStaff(Staff staff);
 
     @SelectProvider(StaffSqlProvider.class)
@@ -42,9 +45,19 @@ public interface StaffMapper {
             }}.toString();
         }
 
+        public String getStaffByEmail(String email) {
+            return new SQL() {{
+                SELECT("*");
+                FROM("STAFF");
+                WHERE("EMAIL = #{email}");
+            }}.toString();
+        }
+
         public String createStaff(Staff staff) {
             return new SQL() {{
                 INSERT_INTO("STAFF");
+                VALUES("EMAIL", "#{email}");
+                VALUES("PASSWORD", "#{password}");
                 VALUES("LAST_NAME", "#{lastName}");
                 VALUES("FIRST_NAME", "#{firstName}");
                 VALUES("BIRTHDAY", "#{birthday}");
@@ -54,6 +67,8 @@ public interface StaffMapper {
         public String updateStaff(Staff staff) {
             return new SQL() {{
                 UPDATE("STAFF");
+                SET("EMAIL = #{email}");
+                SET("PASSWORD = #{password}");
                 SET("LAST_NAME = #{lastName}");
                 SET("FIRST_NAME = #{firstName}");
                 SET("BIRTHDAY = #{birthday}");
