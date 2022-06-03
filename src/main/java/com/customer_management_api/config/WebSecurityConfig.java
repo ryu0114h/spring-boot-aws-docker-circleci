@@ -46,7 +46,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/auth/*").permitAll().anyRequest().authenticated().and()
+        http.csrf().disable()
+                .authorizeRequests().antMatchers("/auth/*").permitAll()
+                .anyRequest().authenticated().and()
                 .exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
                     Map<String, Object> responseMap = new HashMap<>();
                     ObjectMapper mapper = new ObjectMapper();
@@ -56,7 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     response.setHeader("content-type", "application/json");
                     String responseMsg = mapper.writeValueAsString(responseMap);
                     response.getWriter().write(responseMsg);
-                }).and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                }).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
