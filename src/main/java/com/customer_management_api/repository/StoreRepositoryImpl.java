@@ -28,12 +28,14 @@ public class StoreRepositoryImpl implements StoreRepository {
 
     @Override
     public Store createStore(Store store) {
-        return storeMapper.createStore(store);
+        storeMapper.createStore(store);
+        return store;
     }
 
     @Override
     public Store updateStore(Store store) {
-        return storeMapper.updateStore(store);
+        storeMapper.updateStore(store);
+        return store;
     }
 
     @Override

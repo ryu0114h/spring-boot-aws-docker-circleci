@@ -1,8 +1,17 @@
 package com.customer_management_api.controller;
 
 import com.customer_management_api.entity.Staff;
+import com.customer_management_api.entity.StaffSelector;
+import com.customer_management_api.security.LoginStaff;
+import com.customer_management_api.service.JwtUserDetailsService;
 import com.customer_management_api.service.StaffService;
+import com.customer_management_api.util.JwtTokenUtil;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,14 +27,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class StaffController {
 
     private final StaffService staffService;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUserDetailsService userDetailsService;
+    private final JwtTokenUtil jwtTokenUtil;
 
-    public StaffController(StaffService staffService) {
+    public StaffController(StaffService staffService,
+                           PasswordEncoder passwordEncoder,
+                           JwtUserDetailsService userDetailsService,
+                           JwtTokenUtil jwtTokenUtil) {
         this.staffService = staffService;
+        this.passwordEncoder = passwordEncoder;
+        this.userDetailsService = userDetailsService;
+        this.jwtTokenUtil = jwtTokenUtil;
     }
 
     @GetMapping
-    public List<Staff> getStaffs() {
-        return staffService.getStaffs();
+    public List<Staff> getStaffs(@AuthenticationPrincipal LoginStaff loginStaff) {
+        StaffSelector selector = new StaffSelector();
+        selector.setStoreId(loginStaff.getStaff().getStoreId());
+        return staffService.getStaffs(selector);
     }
 
     @GetMapping("/{id}")
@@ -35,7 +55,16 @@ public class StaffController {
 
     @PostMapping
     public Staff createStaff(@RequestBody @Validated({Staff.CreateStaffGroup.class}) Staff staff) {
-        return staffService.createStaff(staff);
+        Staff createdStaff = staffService.createStaff(staff);
+        Map<String, Object> responseMap = new HashMap<>();
+        staff.setPassword(passwordEncoder.encode(staff.getPassword()));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(staff.getEmail());
+        String token = jwtTokenUtil.generateToken(userDetails);
+        responseMap.put("email", staff.getEmail());
+        responseMap.put("message", "Account created successfully");
+        responseMap.put("token", token);
+
+        return createdStaff;
     }
 
     @PatchMapping("/{id}")

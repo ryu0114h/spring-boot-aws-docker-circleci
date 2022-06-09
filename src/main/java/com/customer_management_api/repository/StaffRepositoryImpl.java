@@ -1,6 +1,7 @@
 package com.customer_management_api.repository;
 
 import com.customer_management_api.entity.Staff;
+import com.customer_management_api.entity.StaffSelector;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class StaffRepositoryImpl implements StaffRepository {
     }
 
     @Override
-    public List<Staff> getStaffs() {
-        return staffMapper.getStaffs();
+    public List<Staff> getStaffs(StaffSelector selector) {
+        return staffMapper.getStaffs(selector);
     }
 
     @Override
@@ -33,12 +34,14 @@ public class StaffRepositoryImpl implements StaffRepository {
 
     @Override
     public Staff createStaff(Staff staff) {
-        return staffMapper.createStaff(staff);
+        staffMapper.createStaff(staff);
+        return staff;
     }
 
     @Override
     public Staff updateStaff(Staff staff) {
-        return staffMapper.updateStaff(staff);
+        staffMapper.updateStaff(staff);
+        return staff;
     }
 
     @Override

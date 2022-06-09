@@ -2,12 +2,12 @@ package com.customer_management_api.service;
 
 import com.customer_management_api.entity.Staff;
 import com.customer_management_api.repository.StaffRepository;
+import com.customer_management_api.security.LoginStaff;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,8 +32,8 @@ public class JwtUserDetailsService implements UserDetailsService {
         }
 
         Staff staff = optionalStaff.get();
-        List<GrantedAuthority> authorityList = new ArrayList<>();
-        authorityList.add(new SimpleGrantedAuthority("STAFF_ROLE"));
-        return new User(staff.getEmail(), staff.getPassword(), authorityList);
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("STAFF_ROLE"));
+        return new LoginStaff(staff, authorities);
     }
 }

@@ -1,10 +1,15 @@
 package com.customer_management_api.repository;
 
 import com.customer_management_api.entity.Staff;
+import com.customer_management_api.entity.StaffSelector;
 import java.util.List;
 import java.util.Optional;
+import org.apache.ibatis.annotations.DeleteProvider;
+import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.builder.annotation.ProviderMethodResolver;
 import org.apache.ibatis.jdbc.SQL;
 
@@ -12,7 +17,7 @@ import org.apache.ibatis.jdbc.SQL;
 public interface StaffMapper {
 
     @SelectProvider(StaffSqlProvider.class)
-    List<Staff> getStaffs();
+    List<Staff> getStaffs(StaffSelector selector);
 
     @SelectProvider(StaffSqlProvider.class)
     Optional<Staff> getStaff(Long id);
@@ -20,20 +25,22 @@ public interface StaffMapper {
     @SelectProvider(StaffSqlProvider.class)
     Optional<Staff> getStaffByEmail(String email);
 
-    @SelectProvider(StaffSqlProvider.class)
-    Staff createStaff(Staff staff);
+    @InsertProvider(StaffSqlProvider.class)
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    int createStaff(Staff staff);
 
-    @SelectProvider(StaffSqlProvider.class)
-    Staff updateStaff(Staff staff);
+    @UpdateProvider(StaffSqlProvider.class)
+    int updateStaff(Staff staff);
 
-    @SelectProvider(StaffSqlProvider.class)
-    void deleteStaff(Long id);
+    @DeleteProvider(StaffSqlProvider.class)
+    int deleteStaff(Long id);
 
     class StaffSqlProvider implements ProviderMethodResolver {
-        public String getStaffs() {
+        public String getStaffs(StaffSelector selector) {
             return new SQL() {{
                 SELECT("*");
                 FROM("STAFF");
+                WHERE("STORE_ID = #{storeId}");
             }}.toString();
         }
 
@@ -61,6 +68,7 @@ public interface StaffMapper {
                 VALUES("LAST_NAME", "#{lastName}");
                 VALUES("FIRST_NAME", "#{firstName}");
                 VALUES("BIRTHDAY", "#{birthday}");
+                VALUES("STORE_ID", "#{storeId}");
             }}.toString();
         }
 

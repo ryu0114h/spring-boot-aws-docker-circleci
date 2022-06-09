@@ -3,8 +3,12 @@ package com.customer_management_api.repository;
 import com.customer_management_api.entity.Store;
 import java.util.List;
 import java.util.Optional;
+import org.apache.ibatis.annotations.DeleteProvider;
+import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.builder.annotation.ProviderMethodResolver;
 import org.apache.ibatis.jdbc.SQL;
 
@@ -17,14 +21,15 @@ public interface StoreMapper {
     @SelectProvider(StoreSqlProvider.class)
     Optional<Store> getStore(Long id);
 
-    @SelectProvider(StoreSqlProvider.class)
-    Store createStore(Store store);
+    @InsertProvider(StoreSqlProvider.class)
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    int createStore(Store store);
 
-    @SelectProvider(StoreSqlProvider.class)
-    Store updateStore(Store store);
+    @UpdateProvider(StoreSqlProvider.class)
+    int updateStore(Store store);
 
-    @SelectProvider(StoreSqlProvider.class)
-    void deleteStore(Long id);
+    @DeleteProvider(StoreSqlProvider.class)
+    int deleteStore(Long id);
 
     class StoreSqlProvider implements ProviderMethodResolver {
         public String getStores() {
@@ -42,6 +47,7 @@ public interface StoreMapper {
             }}.toString();
         }
 
+        @Options(useGeneratedKeys = true)
         public String createStore(Store store) {
             return new SQL() {{
                 INSERT_INTO("STORE");

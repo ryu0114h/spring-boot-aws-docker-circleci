@@ -1,6 +1,7 @@
 package com.customer_management_api.service;
 
 import com.customer_management_api.entity.Staff;
+import com.customer_management_api.entity.StaffSelector;
 import com.customer_management_api.repository.StaffRepository;
 import java.util.List;
 import java.util.Optional;
@@ -18,8 +19,8 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public List<Staff> getStaffs() {
-        return staffRepository.getStaffs();
+    public List<Staff> getStaffs(StaffSelector selector) {
+        return staffRepository.getStaffs(selector);
     }
 
     @Override
