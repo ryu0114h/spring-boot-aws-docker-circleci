@@ -1,40 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.customer_management_api.repository.StoreMapper">
-    <resultMap id="Store" type="com.customer_management_api.entity.Store">
+<mapper namespace="com.customer_management_api.repository.StaffMapper">
+    <resultMap id="Staff" type="com.customer_management_api.entity.Staff">
         <id property="id" column="ID"/>
-        <result property="name" column="NAME"/>
-        <result property="description" column="DESCRIPTION"/>
+        <result property="lastName" column="LAST_NAME"/>
+        <result property="firstName" column="FIRST_NAME"/>
+        <result property="email" column="EMAIL"/>
+        <result property="password" column="PASSWORD"/>
+        <result property="birthday" column="BIRTHDAY"/>
+        <result property="storeId" column="STORE_ID"/>
+        <result property="createdAt" column="CREATED_AT"/>
+        <result property="updatedAt" column="UPDATED_AT"/>
     </resultMap>
 
-    <select id="getStores" resultMap="Store">
+    <select id="getStaffs" resultMap="Staff">
         SELECT *
-        FROM STORE
+        FROM STAFF
+        WHERE STORE_ID = #{storeId}
     </select>
 
-    <select id="getStore" resultMap="Store">
+    <select id="getStaff" resultMap="Staff">
         SELECT *
-        FROM STORE
+        FROM STAFF
         WHERE ID = #{id}
+        AND STORE_ID = #{storeId}
     </select>
 
-    <insert id="createStore" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO STORE (NAME, DESCRIPTION)
-        VALUES (#{name}, #{description})
+    <select id="getStaffByEmail" resultMap="Staff">
+        SELECT *
+        FROM STAFF
+        WHERE EMAIL = #{email}
+    </select>
+
+    <insert id="createStaff" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO STAFF (EMAIL, PASSWORD, LAST_NAME, FIRST_NAME, BIRTHDAY, STORE_ID)
+        VALUES (#{email}, #{password}, #{lastName}, #{firstName}, #{birthday}, #{storeId})
     </insert>
 
-    <update id="updateStore">
-        UPDATE STORE
+    <update id="updateStaff">
+        UPDATE STAFF
         <set>
-            <if test="name != null">NAME = #{name},</if>
-            <if test="description != null">DESCRIPTION = #{description}</if>
+            <if test="email != null">EMAIL = #{email},</if>
+            <if test="password != null">PASSWORD = #{password},</if>
+            <if test="lastName != null">LAST_NAME = #{lastName},</if>
+            <if test="firstName != null">FIRST_NAME = #{firstName},</if>
+            <if test="birthday != null">BIRTHDAY = #{birthday},</if>
         </set>
         WHERE ID = #{id}
     </update>
 
-    <delete id="deleteStore">
-        DELETE FROM STORE
+    <delete id="deleteStaff">
+        DELETE FROM STAFF
         WHERE ID = #{id}
     </delete>
 </mapper>

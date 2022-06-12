@@ -6,6 +6,8 @@
         <id property="id" column="ID"/>
         <result property="name" column="NAME"/>
         <result property="description" column="DESCRIPTION"/>
+        <result property="createdAt" column="CREATED_AT"/>
+        <result property="updatedAt" column="UPDATED_AT"/>
     </resultMap>
 
     <select id="getStores" resultMap="Store">
@@ -28,7 +30,7 @@
         UPDATE STORE
         <set>
             <if test="name != null">NAME = #{name},</if>
-            <if test="description != null">DESCRIPTION = #{description}</if>
+            <if test="description != null">DESCRIPTION = #{description},</if>
         </set>
         WHERE ID = #{id}
     </update>
