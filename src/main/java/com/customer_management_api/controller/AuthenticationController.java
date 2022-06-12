@@ -21,7 +21,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -51,11 +50,27 @@ public class AuthenticationController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> loginStaff(@RequestParam("email") String email,
-                                        @RequestParam("password") String password) {
+    @PostMapping("/register")
+    public ResponseEntity<?> createStore(
+            @RequestBody @Validated({Register.CreateRegisterGroup.class}) Register Register
+    ) {
         Map<String, Object> responseMap = new HashMap<>();
+        Register.setPassword(passwordEncoder.encode(Register.getPassword()));
+        RegisterService.createRegister(Register);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(Register.getEmail());
+        String token = jwtTokenUtil.generateToken(userDetails);
+        responseMap.put("message", "Account created successfully");
+        responseMap.put("token", token);
+        return ResponseEntity.ok(responseMap);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginStaff(@RequestBody HashMap<String, String> body) {
+        Map<String, Object> responseMap = new HashMap<>();
+
         try {
+            String email = body.get("email");
+            String password = body.get("password");
             Authentication auth =
                     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
             if (auth.isAuthenticated()) {
@@ -85,19 +100,5 @@ public class AuthenticationController {
             responseMap.put("message", "Something went wrong");
             return ResponseEntity.status(500).body(responseMap);
         }
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<?> createStore(
-            @RequestBody @Validated({Register.CreateRegisterGroup.class}) Register Register
-    ) {
-        Map<String, Object> responseMap = new HashMap<>();
-        Register.setPassword(passwordEncoder.encode(Register.getPassword()));
-        RegisterService.createRegister(Register);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(Register.getEmail());
-        String token = jwtTokenUtil.generateToken(userDetails);
-        responseMap.put("message", "Account created successfully");
-        responseMap.put("token", token);
-        return ResponseEntity.ok(responseMap);
     }
 }
