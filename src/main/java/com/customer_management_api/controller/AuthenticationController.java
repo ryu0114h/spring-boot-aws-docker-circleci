@@ -52,12 +52,12 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<?> createStore(
-            @RequestBody @Validated({Register.CreateRegisterGroup.class}) Register Register
+            @RequestBody @Validated({Register.CreateRegisterGroup.class}) Register register
     ) {
         Map<String, Object> responseMap = new HashMap<>();
-        Register.setPassword(passwordEncoder.encode(Register.getPassword()));
-        RegisterService.createRegister(Register);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(Register.getEmail());
+        register.setPassword(passwordEncoder.encode(register.getPassword()));
+        RegisterService.createRegister(register);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(register.getEmail());
         String token = jwtTokenUtil.generateToken(userDetails);
         responseMap.put("message", "Account created successfully");
         responseMap.put("token", token);
