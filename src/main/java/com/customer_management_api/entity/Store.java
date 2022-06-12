@@ -12,19 +12,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Store {
 
-    Long id;
+    private Long id;
 
     @NotBlank(groups = {CreateStoreGroup.class, UpdateStoreGroup.class})
     @Size(min = 0, max = 50, groups = {CreateStoreGroup.class, UpdateStoreGroup.class})
-    String name;
+    private String name;
 
     @NotBlank(groups = {CreateStoreGroup.class, UpdateStoreGroup.class})
     @Size(min = 0, max = 200, groups = {CreateStoreGroup.class, UpdateStoreGroup.class})
-    String description;
+    private String description;
 
-    LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
-    LocalDateTime updatedAt;
+    private LocalDateTime updatedAt;
 
     public Store(String name, String description) {
         this.name = name;
