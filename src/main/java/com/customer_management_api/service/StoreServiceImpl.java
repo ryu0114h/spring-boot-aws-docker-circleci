@@ -34,13 +34,15 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public Store createStore(Store store) {
         storeRepository.createStore(store);
-        Store newStore = getStore(store.getId());
-        return newStore;
+        Store createdStore = getStore(store.getId());
+        return createdStore;
     }
 
     @Override
     public Store updateStore(Store store) {
-        return storeRepository.updateStore(store);
+        storeRepository.updateStore(store);
+        Store updatedStore = getStore(store.getId());
+        return updatedStore;
     }
 
     @Override

@@ -40,14 +40,8 @@ public class StoreController {
 
     @PatchMapping("/{id}")
     public Store updateStore(@PathVariable Long id,
-                             @RequestBody @Validated({Store.UpdateStoreGroup.class}) Store body) {
-        Store store = storeService.getStore(id);
-        if (body.getName() != null) {
-            store.setName(body.getName());
-        }
-        if (body.getDescription() != null) {
-            store.setDescription(body.getDescription());
-        }
+                             @RequestBody @Validated({Store.UpdateStoreGroup.class}) Store store) {
+        store.setId(id);
         return storeService.updateStore(store);
     }
 
