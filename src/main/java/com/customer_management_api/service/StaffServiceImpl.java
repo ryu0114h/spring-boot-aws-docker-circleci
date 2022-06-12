@@ -34,12 +34,14 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public Staff createStaff(Staff staff) {
-        return staffRepository.createStaff(staff);
+        Staff createdStaff = staffRepository.createStaff(staff);
+        return getStaff(createdStaff.getId(), createdStaff.getStoreId());
     }
 
     @Override
     public Staff updateStaff(Staff staff) {
-        return staffRepository.updateStaff(staff);
+        Staff updatedStaff = staffRepository.updateStaff(staff);
+        return getStaff(updatedStaff.getId(), updatedStaff.getStoreId());
     }
 
     @Override

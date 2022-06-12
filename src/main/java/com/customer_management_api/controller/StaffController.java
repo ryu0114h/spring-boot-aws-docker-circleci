@@ -77,17 +77,15 @@ public class StaffController {
     @PatchMapping("/{id}")
     public Staff updateStaff(@AuthenticationPrincipal LoginStaff loginStaff,
                              @PathVariable Long id,
-                             @RequestBody @Validated({Staff.UpdateStaffGroup.class}) Staff body) {
+                             @RequestBody @Validated({Staff.UpdateStaffGroup.class}) Staff staff) {
         Long storeId = loginStaff.getStaff().getStoreId();
-        Staff staff = staffService.getStaff(id, storeId);
-        if (body.getLastName() != null) {
-            staff.setLastName(body.getLastName());
+        staff.setId(id);
+        staff.setStoreId(storeId);
+        if (staff.getEmail() != null) {
+            staff.setEmail(null);
         }
-        if (body.getFirstName() != null) {
-            staff.setFirstName(body.getFirstName());
-        }
-        if (body.getBirthday() != null) {
-            staff.setBirthday(body.getBirthday());
+        if (staff.getPassword() != null) {
+            staff.setPassword(null);
         }
         return staffService.updateStaff(staff);
     }
