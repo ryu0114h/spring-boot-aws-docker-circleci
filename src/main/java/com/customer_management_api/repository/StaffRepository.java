@@ -9,7 +9,7 @@ public interface StaffRepository {
 
     List<Staff> getStaffs(StaffSelector selector);
 
-    Optional<Staff> getStaff(Long id);
+    Optional<Staff> getStaff(Long id, Long storeId);
 
     Optional<Staff> getStaffByEmail(String email);
 

@@ -23,8 +23,8 @@ public class StaffRepositoryImpl implements StaffRepository {
     }
 
     @Override
-    public Optional<Staff> getStaff(Long id) {
-        return staffMapper.getStaff(id);
+    public Optional<Staff> getStaff(Long id, Long storeId) {
+        return staffMapper.getStaff(id, storeId);
     }
 
     @Override

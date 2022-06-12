@@ -24,8 +24,8 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public Staff getStaff(Long id) {
-        Optional<Staff> optionalStaff = staffRepository.getStaff(id);
+    public Staff getStaff(Long id, Long storeId) {
+        Optional<Staff> optionalStaff = staffRepository.getStaff(id, storeId);
         if (optionalStaff.isEmpty()) {
             throw new RuntimeException("スタッフが存在しません。");
         }
@@ -43,8 +43,8 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public void deleteStaff(Long id) {
-        getStaff(id);
+    public void deleteStaff(Long id, Long storeId) {
+        getStaff(id, storeId);
         staffRepository.deleteStaff(id);
     }
 }

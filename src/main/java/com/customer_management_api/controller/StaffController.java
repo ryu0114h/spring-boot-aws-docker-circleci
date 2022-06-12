@@ -44,20 +44,27 @@ public class StaffController {
     @GetMapping
     public List<Staff> getStaffs(@AuthenticationPrincipal LoginStaff loginStaff) {
         StaffSelector selector = new StaffSelector();
-        selector.setStoreId(loginStaff.getStaff().getStoreId());
+        Long storeId = loginStaff.getStaff().getStoreId();
+        selector.setStoreId(storeId);
         return staffService.getStaffs(selector);
     }
 
     @GetMapping("/{id}")
-    public Staff getStaff(@PathVariable Long id) {
-        return staffService.getStaff(id);
+    public Staff getStaff(@AuthenticationPrincipal LoginStaff loginStaff, @PathVariable Long id) {
+        Long storeId = loginStaff.getStaff().getStoreId();
+        return staffService.getStaff(id, storeId);
     }
 
     @PostMapping
-    public Staff createStaff(@RequestBody @Validated({Staff.CreateStaffGroup.class}) Staff staff) {
-        Staff createdStaff = staffService.createStaff(staff);
-        Map<String, Object> responseMap = new HashMap<>();
+    public Staff createStaff(@AuthenticationPrincipal LoginStaff loginStaff,
+                             @RequestBody @Validated({Staff.CreateStaffGroup.class}) Staff staff) {
+        Long storeId = loginStaff.getStaff().getStoreId();
+        staff.setStoreId(storeId);
         staff.setPassword(passwordEncoder.encode(staff.getPassword()));
+
+        Staff createdStaff = staffService.createStaff(staff);
+
+        Map<String, Object> responseMap = new HashMap<>();
         UserDetails userDetails = userDetailsService.loadUserByUsername(staff.getEmail());
         String token = jwtTokenUtil.generateToken(userDetails);
         responseMap.put("email", staff.getEmail());
@@ -68,9 +75,11 @@ public class StaffController {
     }
 
     @PatchMapping("/{id}")
-    public Staff updateStaff(@PathVariable Long id,
+    public Staff updateStaff(@AuthenticationPrincipal LoginStaff loginStaff,
+                             @PathVariable Long id,
                              @RequestBody @Validated({Staff.UpdateStaffGroup.class}) Staff body) {
-        Staff staff = staffService.getStaff(id);
+        Long storeId = loginStaff.getStaff().getStoreId();
+        Staff staff = staffService.getStaff(id, storeId);
         if (body.getLastName() != null) {
             staff.setLastName(body.getLastName());
         }
@@ -84,7 +93,9 @@ public class StaffController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteStaff(@PathVariable Long id) {
-        staffService.deleteStaff(id);
+    public void deleteStaff(@AuthenticationPrincipal LoginStaff loginStaff,
+                            @PathVariable Long id) {
+        Long storeId = loginStaff.getStaff().getStoreId();
+        staffService.deleteStaff(id, storeId);
     }
 }

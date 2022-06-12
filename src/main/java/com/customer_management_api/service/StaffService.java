@@ -8,11 +8,11 @@ public interface StaffService {
 
     List<Staff> getStaffs(StaffSelector selector);
 
-    Staff getStaff(Long id);
+    Staff getStaff(Long id, Long storeId);
 
     Staff createStaff(Staff staff);
 
     Staff updateStaff(Staff staff);
 
-    void deleteStaff(Long id);
+    void deleteStaff(Long id, Long storeId);
 }

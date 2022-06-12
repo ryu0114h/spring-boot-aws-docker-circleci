@@ -12,25 +12,76 @@
         <result property="storeId" column="STORE_ID"/>
         <result property="createdAt" column="CREATED_AT"/>
         <result property="updatedAt" column="UPDATED_AT"/>
+        <collection property="store"
+                    resultMap="com.customer_management_api.repository.StoreMapper.Store"
+                    columnPrefix="STORE__"/>
     </resultMap>
 
     <select id="getStaffs" resultMap="Staff">
-        SELECT *
+        SELECT
+        STAFF.ID,
+        STAFF.LAST_NAME,
+        STAFF.FIRST_NAME,
+        STAFF.EMAIL,
+        STAFF.PASSWORD,
+        STAFF.BIRTHDAY,
+        STAFF.STORE_ID,
+        STAFF.CREATED_AT,
+        STAFF.UPDATED_AT,
+        STORE.ID AS STORE__ID,
+        STORE.NAME AS STORE__NAME,
+        STORE.DESCRIPTION AS STORE__DESCRIPTION,
+        STORE.CREATED_AT AS STORE__CREATED_AT,
+        STORE.UPDATED_AT AS STORE__UPDATED_AT
         FROM STAFF
+        INNER JOIN STORE
+        ON STAFF.STORE_ID = STORE.ID
         WHERE STORE_ID = #{storeId}
     </select>
 
     <select id="getStaff" resultMap="Staff">
-        SELECT *
+        SELECT
+        STAFF.ID,
+        STAFF.LAST_NAME,
+        STAFF.FIRST_NAME,
+        STAFF.EMAIL,
+        STAFF.PASSWORD,
+        STAFF.BIRTHDAY,
+        STAFF.STORE_ID,
+        STAFF.CREATED_AT,
+        STAFF.UPDATED_AT,
+        STORE.ID AS STORE__ID,
+        STORE.NAME AS STORE__NAME,
+        STORE.DESCRIPTION AS STORE__DESCRIPTION,
+        STORE.CREATED_AT AS STORE__CREATED_AT,
+        STORE.UPDATED_AT AS STORE__UPDATED_AT
         FROM STAFF
-        WHERE ID = #{id}
-        AND STORE_ID = #{storeId}
+        INNER JOIN STORE
+        ON STAFF.STORE_ID = STORE.ID
+        WHERE STAFF.ID = #{id}
+        AND STAFF.STORE_ID = #{storeId}
     </select>
 
     <select id="getStaffByEmail" resultMap="Staff">
-        SELECT *
+        SELECT
+        STAFF.ID,
+        STAFF.LAST_NAME,
+        STAFF.FIRST_NAME,
+        STAFF.EMAIL,
+        STAFF.PASSWORD,
+        STAFF.BIRTHDAY,
+        STAFF.STORE_ID,
+        STAFF.CREATED_AT,
+        STAFF.UPDATED_AT,
+        STORE.ID AS STORE__ID,
+        STORE.NAME AS STORE__NAME,
+        STORE.DESCRIPTION AS STORE__DESCRIPTION,
+        STORE.CREATED_AT AS STORE__CREATED_AT,
+        STORE.UPDATED_AT AS STORE__UPDATED_AT
         FROM STAFF
-        WHERE EMAIL = #{email}
+        INNER JOIN STORE
+        ON STAFF.STORE_ID = STORE.ID
+        WHERE STAFF.EMAIL = #{email}
     </select>
 
     <insert id="createStaff" useGeneratedKeys="true" keyProperty="id">
