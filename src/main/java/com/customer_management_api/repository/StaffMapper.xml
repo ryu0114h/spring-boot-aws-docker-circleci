@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.customer_management_api.repository.StoreMapper">
+    <resultMap id="Store" type="com.customer_management_api.entity.Store">
+        <id property="id" column="ID"/>
+        <result property="name" column="NAME"/>
+        <result property="description" column="DESCRIPTION"/>
+    </resultMap>
+
+    <select id="getStores" resultMap="Store">
+        SELECT *
+        FROM STORE
+    </select>
+
+    <select id="getStore" resultMap="Store">
+        SELECT *
+        FROM STORE
+        WHERE ID = #{id}
+    </select>
+
+    <insert id="createStore" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO STORE (NAME, DESCRIPTION)
+        VALUES (#{name}, #{description})
+    </insert>
+
+    <update id="updateStore">
+        UPDATE STORE
+        <set>
+            <if test="name != null">NAME = #{name},</if>
+            <if test="description != null">DESCRIPTION = #{description}</if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <delete id="deleteStore">
+        DELETE FROM STORE
+        WHERE ID = #{id}
+    </delete>
+</mapper>
