@@ -8,10 +8,10 @@ spring:
     init:
       mode: always
   datasource:
-    url: jdbc:mysql://localhost:3306/customer_management
+    url: jdbc:mysql://${DB_ENDPOINT:localhost}:3306/customer_management
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: password
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:password}
 
 mybatis:
   configuration:
