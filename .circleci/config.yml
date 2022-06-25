@@ -6,7 +6,7 @@ orbs:
 jobs:
   test:
     docker:
-      - image:openjdk:17.0.2
+      - image: openjdk:17.0.2
     steps:
       - checkout
       - run: ./mvnw test
