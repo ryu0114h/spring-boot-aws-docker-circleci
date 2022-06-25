@@ -6,7 +6,4 @@ orbs:
 workflows:
   maven_test:
     jobs:
-      - maven/test:
-          executor:
-            name: "maven/default"
-            tag: "17.0.0"
+      - maven/test
