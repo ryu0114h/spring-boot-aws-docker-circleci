@@ -95,7 +95,7 @@ public class StaffControllerTest {
         Mockito.doReturn(staffList).when(staffService).getStaffs(Mockito.argThat(matcher));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/staffs"))
-                .andExpect(status().is1xxInformational())
+                .andExpect(status().isOk())
                 .andReturn();
 
         Mockito.verify(staffService, Mockito.times(1)).getStaffs(Mockito.argThat(matcher));
