@@ -30,7 +30,8 @@ jobs:
       #      - run: ls
       #      - run: ./mvnw package spring-boot:repackage
       #      - run: ls
-      - run: yum -y install openssh-clients
+      #      - run: yum -y install openssh-clients
+      - run: apk add openssh-client
         #      - add_ssh_keys:
         #          fingerprints:
         #            - "93:26:32:10:d4:24:6d:f2:1d:75:2a:77:a5:89:ab:b6"
