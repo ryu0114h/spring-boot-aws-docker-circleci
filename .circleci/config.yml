@@ -29,7 +29,7 @@ jobs:
       - checkout
       - run: microdnf install yum
         #      - run: rpm -q yum
-        #      - run: yum -y install openssh-clients
+      - run: yum -y install openssh-clients
         #      - run: ./mvnw package spring-boot:repackage
         #      - run: ls
         #      - run: apk add openssh-client
