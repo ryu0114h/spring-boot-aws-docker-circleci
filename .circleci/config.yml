@@ -30,14 +30,13 @@ jobs:
       - run: microdnf install yum
         #      - run: rpm -q yum
       - run: yum -y install openssh-clients
-        #      - run: ./mvnw package spring-boot:repackage
+          #      - run: ./mvnw package spring-boot:repackage
         #      - run: ls
         #      - run: apk add openssh-client
-        #      - add_ssh_keys:
-        #          fingerprints:
-      #            - "93:26:32:10:d4:24:6d:f2:1d:75:2a:77:a5:89:ab:b6"
-      #      - run: apt-get update && apt-get -y install openssh-client
-      #      - run: scp -o "StrictHostKeyChecking=no" target/customer-management-api-0.0.1-SNAPSHOT.jar ec2-user@3.114.212.130:~/
+      - add_ssh_keys:
+          fingerprints:
+            - "93:26:32:10:d4:24:6d:f2:1d:75:2a:77:a5:89:ab:b6"
+      - run: scp -o "StrictHostKeyChecking=no" target/customer-management-api-0.0.1-SNAPSHOT.jar ec2-user@3.114.212.130:~/
 
       #  deploy:
       #    docker:
