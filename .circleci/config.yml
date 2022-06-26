@@ -16,6 +16,15 @@ jobs:
     steps:
       - checkout
       - run: ./mvnw test
+  deploy:
+    docker:
+      - image: openjdk:17.0.2
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: 93:26:32:10:d4:24:6d:f2:1d:75:2a:77:a5:89:ab:b6
+      - run: echo "hello world"
+      - run: pwd
 
 workflows:
   test:
