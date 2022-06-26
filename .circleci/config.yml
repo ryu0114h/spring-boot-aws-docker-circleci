@@ -17,8 +17,8 @@ jobs:
       - checkout
       - run: ./mvnw test
   deploy:
-    docker:
-      - image: ubuntu
+    machine:
+      image: circleci/classic:edge
     steps:
       - checkout
       - add_ssh_keys:
