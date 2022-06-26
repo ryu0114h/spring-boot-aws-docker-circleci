@@ -15,6 +15,7 @@ jobs:
           MYSQL_PASSWORD: password
     steps:
       - checkout
+      - run: env
       - run: ./mvnw test
   deploy:
     docker:
