@@ -18,13 +18,13 @@ jobs:
       - run: ./mvnw test
   deploy:
     docker:
-      - image: openjdk:17.0.2
-      - image: mysql:8
-        environment:
-          MYSQL_DATABASE: customer_management
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_USER: user
-          MYSQL_PASSWORD: password
+      #      - image: openjdk:17.0.2
+      #      - image: mysql:8
+      #        environment:
+      #          MYSQL_DATABASE: customer_management
+      #          MYSQL_ROOT_PASSWORD: password
+      #          MYSQL_USER: user
+      #          MYSQL_PASSWORD: password
       - image: cimg/base:2022.06
     steps:
       - checkout
