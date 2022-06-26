@@ -25,6 +25,9 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_USER: user
           MYSQL_PASSWORD: password
+          DB_USERNAME: admin
+          DB_PASSWORD: password
+          DB_ENDPOINT: customer-management-database-1.cluster-c37ecyruueoq.ap-northeast-1.rds.amazonaws.com
     steps:
       - checkout
       - run: ./mvnw package spring-boot:repackage
