@@ -17,8 +17,8 @@ jobs:
       - checkout
       - run: ./mvnw test
   deploy:
-    machine:
-      image: circleci/classic:edge
+    docker:
+      - image: cimg/base:2022.06
     steps:
       - checkout
       - add_ssh_keys:
