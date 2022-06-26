@@ -35,6 +35,7 @@ jobs:
           fingerprints:
             - "93:26:32:10:d4:24:6d:f2:1d:75:2a:77:a5:89:ab:b6"
       - run: scp -o "StrictHostKeyChecking=no" target/customer-management-api-0.0.1-SNAPSHOT.jar ec2-user@3.114.212.130:~/
+      - run: ssh -o "StrictHostKeyChecking=no" ec2-user@3.114.212.130 'java -jar customer-management-api-0.0.1-SNAPSHOT.jar'
 
       #  deploy:
       #    docker:
@@ -45,7 +46,6 @@ jobs:
       #          fingerprints:
       #            - "93:26:32:10:d4:24:6d:f2:1d:75:2a:77:a5:89:ab:b6"
       #      - run: scp -o "StrictHostKeyChecking=no" scp target/customer-management-api-0.0.1-SNAPSHOT.jar  ec2-user@3.114.212.130:~/
-      #      - run: ssh -o "StrictHostKeyChecking=no" ec2-user@3.114.212.130 'pwd && ls'
 
 workflows:
   test:
