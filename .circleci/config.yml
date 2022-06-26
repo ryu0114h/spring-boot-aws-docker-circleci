@@ -17,10 +17,8 @@ jobs:
       - checkout
       - run: ./mvnw test
   deploy:
-    #    docker:
-    #      - image: openjdk:17.0.2
-    machine:
-      image: circleci/classic:edge
+    docker:
+      - image: ubuntu
     steps:
       - checkout
       - add_ssh_keys:
