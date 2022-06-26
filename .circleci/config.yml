@@ -27,12 +27,10 @@ jobs:
           MYSQL_PASSWORD: password
     steps:
       - checkout
+      - run: ./mvnw package spring-boot:repackage
       - run: microdnf install yum
-        #      - run: rpm -q yum
       - run: yum -y install openssh-clients
-          #      - run: ./mvnw package spring-boot:repackage
-        #      - run: ls
-        #      - run: apk add openssh-client
+      - run: ls
       - add_ssh_keys:
           fingerprints:
             - "93:26:32:10:d4:24:6d:f2:1d:75:2a:77:a5:89:ab:b6"
