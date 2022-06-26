@@ -16,6 +16,20 @@ jobs:
     steps:
       - checkout
       - run: ./mvnw test
+  build:
+    docker:
+      - image: openjdk:17.0.2
+      - image: mysql:8
+        environment:
+          MYSQL_DATABASE: customer_management
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_USER: user
+          MYSQL_PASSWORD: password
+    steps:
+      - checkout
+      - run: ls
+      - run: ./mvnw package spring-boot:repackage
+      - run: ls
   deploy:
     docker:
       - image: cimg/base:2022.06
@@ -24,11 +38,12 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "93:26:32:10:d4:24:6d:f2:1d:75:2a:77:a5:89:ab:b6"
-      - run: echo "hello world"
-      - run: ssh -o "StrictHostKeyChecking=no" ec2-user@3.114.212.130 'pwd && ls'
+      #      - run: scp -o "StrictHostKeyChecking=no" scp target/customer-management-api-0.0.1-SNAPSHOT.jar  ec2-user@3.114.212.130:~/
+      #      - run: ssh -o "StrictHostKeyChecking=no" ec2-user@3.114.212.130 'pwd && ls'
 
 workflows:
   test:
     jobs:
       - test
-      - deploy
+      - build
+#      - deploy
