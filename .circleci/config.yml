@@ -24,7 +24,7 @@ jobs:
       - add_ssh_keys:
           fingerprints: "93:26:32:10:d4:24:6d:f2:1d:75:2a:77:a5:89:ab:b6"
       - run: echo "hello world"
-      - run: pwd
+      - run: ssh ec2-user@3.114.212.130
 
 workflows:
   test:
