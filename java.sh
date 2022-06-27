@@ -7,4 +7,4 @@ export DB_ENDPOINT=customer-management-database-1.cluster-c37ecyruueoq.ap-northe
 export DB_USERNAME=admin
 export DB_PASSWORD=password
 
-sudo nohup java -jar $JAR_FILE_NAME --spring.profiles.active=production > -c $LOG_FILE_NAME &
+sudo nohup java -jar $JAR_FILE_NAME --spring.profiles.active=production > $LOG_FILE_NAME &
