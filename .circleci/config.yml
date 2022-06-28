@@ -23,12 +23,9 @@ jobs:
       - image: mysql:8
         environment:
           MYSQL_DATABASE: customer_management
-          MYSQL_ROOT_PASSWORD: $PASSWORD
-          MYSQL_USER: $USERNAME
-          MYSQL_PASSWORD: $PASSWORD
-    #          MYSQL_ROOT_PASSWORD: password
-    #          MYSQL_USER: user
-    #          MYSQL_PASSWORD: password
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_USER: user
+          MYSQL_PASSWORD: password
 
     steps:
       - checkout
@@ -41,9 +38,9 @@ jobs:
             - "93:26:32:10:d4:24:6d:f2:1d:75:2a:77:a5:89:ab:b6"
       - run: scp -o "StrictHostKeyChecking=no" target/customer-management-api-0.0.1-SNAPSHOT.jar ec2-user@3.114.212.130:~/
       - run: scp -o "StrictHostKeyChecking=no" java.sh ec2-user@3.114.212.130:~/
-      - run: ssh -o "StrictHostKeyChecking=no" ec2-user@3.114.212.130 "export DB_ENDPOINT=$ENDPOINT
-          && export DB_USERNAME=$USERNAME
-          && export DB_PASSWORD=$PASSWORD
+      - run: ssh -o "StrictHostKeyChecking=no" ec2-user@3.114.212.130 "export DB_ENDPOINT=$CIRCLECI_DB_ENDPOINT
+          && export DB_USERNAME=$CIRCLECI_DB_USERNAME
+          && export DB_PASSWORD=$CIRCLECI_DB_PASSWORD
           && bash java.sh customer-management-api-0.0.1-SNAPSHOT.jar"
 
 workflows:

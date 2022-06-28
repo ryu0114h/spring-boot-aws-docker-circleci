@@ -3,12 +3,6 @@
 JAR_FILE_NAME=$1
 LOG_FILE_NAME=java.log
 
-#　環境変数の設定
-#export DB_ENDPOINT=customer-management-database-1.cluster-c37ecyruueoq.ap-northeast-1.rds.amazonaws.com
-#export DB_USERNAME=admin
-#export DB_PASSWORD=password
-#echo "set env"
-
 # ログファイルがなければ作成
 if [ -e $LOG_FILE_NAME ]; then
   echo "file exists"
