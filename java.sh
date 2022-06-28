@@ -16,6 +16,7 @@ else
   echo "create a log file"
 fi
 
+ps aux | grep customer-management-api-0.0.1-SNAPSHOT.jar | grep -v grep
 # 既に動いていたら切断
 java_pid=`ps aux | grep customer-management-api-0.0.1-SNAPSHOT.jar | grep -v grep | awk '{ print $2 }'`
 echo $java_pid
