@@ -26,6 +26,8 @@ if [ $java_pid ]; then
   echo "kill java process"
 fi
 
+env
+
 # Spring Boot を実行
 nohup java -jar $JAR_FILE_NAME --spring.profiles.active=production > $LOG_FILE_NAME &
 echo "run spring boot"
