@@ -17,7 +17,7 @@ else
 fi
 
 # 既に動いていたら切断
-java_pid=`ps aux | grep java | grep -v grep | awk '{ print $2 }'`
+java_pid=`ps aux | grep customer-management-api-0.0.1-SNAPSHOT.jar | grep -v grep | awk '{ print $2 }'`
 echo $java_pid
 if [ $java_pid ]; then
   kill -9 $java_pid
