@@ -17,8 +17,11 @@ else
 fi
 
 # 既に動いていたら切断
-ps aux | grep java | grep -v grep | awk '{ print "kill -9", $2 }' | sh
-echo "kill process"
+java_pid=`ps aux | grep java | grep -v grep | awk '{ print $2 }'`
+if [ $java_pid ]; then
+  kill -9 $java_pid
+  echo "kill java process"
+fi
 
 nohup java -jar $JAR_FILE_NAME --spring.profiles.active=production > $LOG_FILE_NAME &
 echo "java -jar"
