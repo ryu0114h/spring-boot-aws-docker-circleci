@@ -14,4 +14,4 @@ else
   sudo chmod 777 $LOG_FILE_NAME
 fi
 
-sudo nohup java -jar $JAR_FILE_NAME --spring.profiles.active=production > $LOG_FILE_NAME &
+nohup java -jar $JAR_FILE_NAME --spring.profiles.active=production > $LOG_FILE_NAME &
